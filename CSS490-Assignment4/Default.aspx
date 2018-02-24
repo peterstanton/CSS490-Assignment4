@@ -23,7 +23,7 @@
             <p>
                 &nbsp;</p>
             <p>
-                <asp:Button ID="loadButton" runat="server" Text="Load Data" />
+                <asp:Button ID="loadButton" runat="server" OnClick="loadButton_Click" Text="Load Data" />
                 <asp:TextBox ID="firstNameBox" runat="server">first name</asp:TextBox>
                 <asp:TextBox ID="lastNameBox" runat="server">last name</asp:TextBox>
                 <asp:Button ID="queryButton" runat="server" Text="Query" />
