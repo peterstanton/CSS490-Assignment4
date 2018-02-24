@@ -166,6 +166,7 @@
     </Content>
     <Content Include="Connected Services\css490myblobAzureStorage\ConnectedService.json" />
     <None Include="Properties\PublishProfiles\CSS490-Assignment420180221010059 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\dimpsey490mycloud - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

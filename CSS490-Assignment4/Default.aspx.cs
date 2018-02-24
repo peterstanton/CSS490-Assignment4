@@ -28,18 +28,18 @@ namespace CSS490_Assignment4
 
         protected void loadButton_Click(object sender, EventArgs e)
         {
-
-            CloudStorageAccount hiAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting(
-    "css490myblob_AzureStorageConnectionString"));
+            CloudStorageAccount hiAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("css490myblob_AzureStorageConnectionString"));
             CloudBlobClient blobClient = hiAccount.CreateCloudBlobClient();
-            CloudBlobContainer myCont = blobClient.GetContainerReference("css490peterblobcontainer");
+            CloudBlobContainer myCont = blobClient.GetContainerReference("petercss490blob");
             CloudBlockBlob myBlob = myCont.GetBlockBlobReference("arrrrghhhhh.txt");
-
+            BlobContainerPermissions perm = myCont.GetPermissions();
+            perm.PublicAccess = BlobContainerPublicAccessType.Blob;
+            myCont.SetPermissions(perm);
 
             WebClient myclient = new WebClient();
             using (myclient)
             {
-
                 Stream inData = myclient.OpenRead("https://css490.blob.core.windows.net/lab4/input.txt");
                 StreamReader myreader = new StreamReader(inData);
                 myBlob.UploadFromStream(inData);
