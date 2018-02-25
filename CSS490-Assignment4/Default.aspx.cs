@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,10 @@ using System.Web.UI.WebControls;
 
 namespace CSS490_Assignment4
 {
+    public class EmployeeEntity : TableEntity
+    {
+        //define entity here.
+    }
     public partial class _Default : Page
     {
 
@@ -36,6 +41,10 @@ namespace CSS490_Assignment4
             BlobContainerPermissions perm = myCont.GetPermissions();
             perm.PublicAccess = BlobContainerPublicAccessType.Blob;
             myCont.SetPermissions(perm);
+
+
+            CloudTableClient littleBobbyTables = hiAccount.CreateCloudTableClient();
+            CloudTable myTable = littleBobbyTables.GetTableReference("Employees");
 
             WebClient myclient = new WebClient();
             using (myclient)
