@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -30,6 +31,7 @@ namespace CSS490_Assignment4
 
         protected void loadButton_Click(object sender, EventArgs e)
         {
+            outputBox.Text = "";
             CloudStorageAccount hiAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("css490myblob_AzureStorageConnectionString"));
             CloudBlobClient blobClient = hiAccount.CreateCloudBlobClient();
@@ -98,10 +100,63 @@ namespace CSS490_Assignment4
                     rowCounter++;
                 }
             }
+            outputBox.Text = "Data transferred to storage!";
         }
 
         protected void queryButton_Click(object sender, EventArgs e)
-        {  //code to grab and display matching records.
+        {
+            string first = null;
+            string last = null;
+            outputBox.Text = "";
+            if (!String.IsNullOrWhiteSpace(firstNameBox.Text))
+                first = firstNameBox.Text;
+            if (!String.IsNullOrWhiteSpace(lastNameBox.Text))
+                last = lastNameBox.Text;
+            if (first == null && last == null)
+            {
+                outputBox.Text = "You need to enter a first and/or last name to find anything.";
+                return;
+            }
+
+
+            CloudStorageAccount tableAccount = CloudStorageAccount.Parse(
+    CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
+            CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
+            CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
+
+
+            TableQuery<DynamicTableEntity> getter = new TableQuery<DynamicTableEntity>();
+            if(first != null && last == null)
+            {
+              getter.Where(TableQuery.GenerateFilterCondition("firstname",
+                                                              QueryComparisons.Equal,
+                                                              first));
+            }
+            else if(first == null && last != null)
+            {
+                getter.Where(TableQuery.GenerateFilterCondition("lastname",
+                                                                QueryComparisons.Equal,
+                                                                last));
+            }
+            else
+            {
+                string filterA = TableQuery.GenerateFilterCondition(
+                   "firstname", QueryComparisons.Equal,
+                   first);
+                string filterB = TableQuery.GenerateFilterCondition(
+                                   "lastname", QueryComparisons.Equal,
+                                   last);
+
+                getter.Where(TableQuery.CombineFilters(filterA, TableOperators.And, filterB));
+            }
+            StringBuilder hello = new StringBuilder();
+            foreach(DynamicTableEntity result in myTable.ExecuteQuery(getter))
+            {
+                hello.Append(Environment.NewLine);
+               
+                
+            }
+            outputBox.Text = hello.ToString();
 
         }
     }

@@ -18,14 +18,15 @@
             <p>
                 <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
             </p>
-        </div>
-        <div class="col-md-4">
-            <p>
-                &nbsp;</p>
+            <p style="margin-left: 120px">
+                <asp:Label ID="Label2" runat="server" Text="First Name"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Label ID="Label1" runat="server" Text="Last Name"></asp:Label>
+            </p>
             <p>
                 <asp:Button ID="loadButton" runat="server" OnClick="loadButton_Click" Text="Load Data" />
-                <asp:TextBox ID="firstNameBox" runat="server">first name</asp:TextBox>
-                <asp:TextBox ID="lastNameBox" runat="server">last name</asp:TextBox>
+                <asp:TextBox ID="firstNameBox" runat="server"></asp:TextBox>
+                <asp:TextBox ID="lastNameBox" runat="server"></asp:TextBox>
                 <asp:Button ID="queryButton" runat="server" Text="Query" OnClick="queryButton_Click" />
                 <asp:TextBox ID="outputBox" runat="server" Height="67px" Width="280px"></asp:TextBox>
             </p>
