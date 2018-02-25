@@ -26,7 +26,8 @@
                 <asp:Button ID="loadButton" runat="server" OnClick="loadButton_Click" Text="Load Data" />
                 <asp:TextBox ID="firstNameBox" runat="server">first name</asp:TextBox>
                 <asp:TextBox ID="lastNameBox" runat="server">last name</asp:TextBox>
-                <asp:Button ID="queryButton" runat="server" Text="Query" />
+                <asp:Button ID="queryButton" runat="server" Text="Query" OnClick="queryButton_Click" />
+                <asp:TextBox ID="outputBox" runat="server" Height="67px" Width="280px"></asp:TextBox>
             </p>
             <p>
                 &nbsp;</p>
