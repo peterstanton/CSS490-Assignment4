@@ -100,12 +100,10 @@ namespace CSS490_Assignment4
                 return;
             }
 
-
             CloudStorageAccount tableAccount = CloudStorageAccount.Parse(
     CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
-
 
             TableQuery<DynamicTableEntity> getter = new TableQuery<DynamicTableEntity>();
             if(first != null && last == null)
