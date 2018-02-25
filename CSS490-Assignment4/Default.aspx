@@ -3,8 +3,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <h1>Peter Stanton&#39;s CSS490 Assignment4!</h1>
+        <p class="lead">This is a simple web application that reads data from an Azure blob, copies it to another blob for archival, and uploads the data to a NoSQL table for querying.</p>
         <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
 
@@ -12,12 +12,9 @@
         <div class="col-md-4">
             <h2>Getting started</h2>
             <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
+                Bear in mind that you MUST click the Load Data button first!</p>
             <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
+                &nbsp;</p>
             <p style="margin-left: 120px">
                 <asp:Label ID="Label2" runat="server" Text="First Name"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,7 +25,7 @@
                 <asp:TextBox ID="firstNameBox" runat="server"></asp:TextBox>
                 <asp:TextBox ID="lastNameBox" runat="server"></asp:TextBox>
                 <asp:Button ID="queryButton" runat="server" Text="Query" OnClick="queryButton_Click" />
-                <asp:TextBox ID="outputBox" runat="server" Height="67px" Width="280px" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="outputBox" runat="server" Height="300px" Width="600px" TextMode="MultiLine" Wrap="False"></asp:TextBox>
             </p>
             <p>
                 &nbsp;</p>

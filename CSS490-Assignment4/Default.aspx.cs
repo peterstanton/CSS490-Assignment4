@@ -18,7 +18,6 @@ namespace CSS490_Assignment4
 {
     public partial class _Default : Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -41,29 +40,12 @@ namespace CSS490_Assignment4
             perm.PublicAccess = BlobContainerPublicAccessType.Blob;
             myCont.SetPermissions(perm);
 
-
-
             CloudStorageAccount tableAccount = CloudStorageAccount.Parse(
                 CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
             WebClient myclient = new WebClient();
             int rowCounter = 1;
-
-         /*   DynamicTableEntity thisaOne = new DynamicTableEntity();
-            Dictionary<string, EntityProperty> dataa1 = new Dictionary<string, EntityProperty>();
-            string firstaaaName = "Robert";
-            string lastaaaName = "Dimpset";
-            dataa1.Add("firstname", new EntityProperty(firstaaaName));
-            dataa1.Add("lastname", new EntityProperty(lastaaaName));
-            dataa1.Add("id", new EntityProperty("29"));
-            thisaOne.Properties = dataa1;
-            thisaOne.PartitionKey = "partitionone";
-            thisaOne.RowKey = "1";
-            var updaterr = TableOperation.InsertOrReplace(thisaOne);
-            myTable.Execute(updaterr);*/
-            
-
 
             using (myclient)
             {
@@ -159,15 +141,19 @@ namespace CSS490_Assignment4
                     hello.Append('\t');
                 }
                 hello.Append(Environment.NewLine);
+                hello.Append("-----------------------------------------------------------------\n");
                 for(int bye = 0; bye < result.Properties.Count; bye++)
                 {
                     hello.Append(result.Properties.ElementAt(bye).Value.StringValue);
                     hello.Append('\t');
                 }
                 hello.Append(Environment.NewLine);
+                hello.Append(Environment.NewLine);
             }
-            outputBox.Text = hello.ToString();
-
+            if (String.IsNullOrEmpty(hello.ToString()))
+                outputBox.Text = "No results found.";
+            else
+                outputBox.Text = hello.ToString();
         }
     }
 }
