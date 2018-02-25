@@ -28,7 +28,7 @@
                 <asp:TextBox ID="firstNameBox" runat="server"></asp:TextBox>
                 <asp:TextBox ID="lastNameBox" runat="server"></asp:TextBox>
                 <asp:Button ID="queryButton" runat="server" Text="Query" OnClick="queryButton_Click" />
-                <asp:TextBox ID="outputBox" runat="server" Height="67px" Width="280px"></asp:TextBox>
+                <asp:TextBox ID="outputBox" runat="server" Height="67px" Width="280px" TextMode="MultiLine"></asp:TextBox>
             </p>
             <p>
                 &nbsp;</p>

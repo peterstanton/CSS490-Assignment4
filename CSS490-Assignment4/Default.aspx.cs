@@ -150,11 +150,21 @@ namespace CSS490_Assignment4
                 getter.Where(TableQuery.CombineFilters(filterA, TableOperators.And, filterB));
             }
             StringBuilder hello = new StringBuilder();
-            foreach(DynamicTableEntity result in myTable.ExecuteQuery(getter))
-            {
+            foreach (DynamicTableEntity result in myTable.ExecuteQuery(getter))
+            {                
+                Dictionary<int, String> columns = new Dictionary<int, string>();
+                for(int hi = 0; hi < result.Properties.Count; hi++)
+                {
+                    hello.Append(result.Properties.ElementAt(hi).Key);
+                    hello.Append('\t');
+                }
                 hello.Append(Environment.NewLine);
-               
-                
+                for(int bye = 0; bye < result.Properties.Count; bye++)
+                {
+                    hello.Append(result.Properties.ElementAt(bye).Value.StringValue);
+                    hello.Append('\t');
+                }
+                hello.Append(Environment.NewLine);
             }
             outputBox.Text = hello.ToString();
 
