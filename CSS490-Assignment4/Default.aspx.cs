@@ -40,15 +40,33 @@ namespace CSS490_Assignment4
             myCont.SetPermissions(perm);
 
 
-            CloudTableClient littleBobbyTables = hiAccount.CreateCloudTableClient();
-            CloudTable myTable = littleBobbyTables.GetTableReference("Employees");
+
+            CloudStorageAccount tableAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
+            CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
+            CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
             WebClient myclient = new WebClient();
             int rowCounter = 1;
+
+         /*   DynamicTableEntity thisaOne = new DynamicTableEntity();
+            Dictionary<string, EntityProperty> dataa1 = new Dictionary<string, EntityProperty>();
+            string firstaaaName = "Robert";
+            string lastaaaName = "Dimpset";
+            dataa1.Add("firstname", new EntityProperty(firstaaaName));
+            dataa1.Add("lastname", new EntityProperty(lastaaaName));
+            dataa1.Add("id", new EntityProperty("29"));
+            thisaOne.Properties = dataa1;
+            thisaOne.PartitionKey = "partitionone";
+            thisaOne.RowKey = "1";
+            var updaterr = TableOperation.InsertOrReplace(thisaOne);
+            myTable.Execute(updaterr);*/
+            
+
+
             using (myclient)
             {
                 Stream inData = myclient.OpenRead("https://css490.blob.core.windows.net/lab4/input.txt");
                 Stream inParse = myclient.OpenRead("https://css490.blob.core.windows.net/lab4/input.txt");
-               // StreamReader myreader = new StreamReader(inData);
                 StreamReader myParse = new StreamReader(inParse);
                 string nowparse = myParse.ReadToEnd();
                 myBlob.UploadFromStream(inData);
@@ -61,43 +79,23 @@ namespace CSS490_Assignment4
                     DynamicTableEntity thisOne = new DynamicTableEntity();
                     Dictionary<string, EntityProperty> data1 = new Dictionary<string, EntityProperty>();
                     String stuff = entry;
-                    if(entry == "\r") {
-                        break;
-                    }
                     List<String> parsed = entry.Split(' ').ToList<String>();
                     parsed.RemoveAll(String.IsNullOrWhiteSpace);
                     string firstName = parsed[1];
                     string lastName = parsed[0];
-                    data1.Add("First Name", new EntityProperty(firstName));
-                    data1.Add("Last Name", new EntityProperty(lastName));
+                    data1.Add("firstname", new EntityProperty(firstName));
+                    data1.Add("lastname", new EntityProperty(lastName));
                     foreach (var datum in parsed.Skip(2))
                     {                    
                         string[] thisVar = datum.Split('=');
-                        data1.Add(thisVar[0], new EntityProperty(thisVar[1]));
+                        data1.Add(thisVar[0].ToLower(), new EntityProperty(thisVar[1]));
                     }
                     thisOne.Properties = data1;
-                    thisOne.PartitionKey = "Partition1";
+                    thisOne.PartitionKey = "partition1";
                     thisOne.RowKey = Convert.ToString(rowCounter);
                     var updater = TableOperation.InsertOrReplace(thisOne);
-                    myTable.Execute(updater); 
-
-
-                    /*
-                    Id = Convert.ToInt32(parsed[2].Split('=')[1]);
-                    phone = Convert.ToInt64(parsed[3].Split('=')[1]);
-                    Office = parsed[4].Split('=')[1];
-                    DynamicTableEntity thisOne = new DynamicTableEntity();
-                    Dictionary<string, EntityProperty> data1 = new Dictionary<string, EntityProperty>();
-                    data1.Add("First Name", new EntityProperty(firstName));
-                    data1.Add("Last Name", new EntityProperty(lastName));
-                    data1.Add("ID", new EntityProperty(Id));
-                    data1.Add("Phone #", new EntityProperty(phone));
-                    data1.Add("Office location", new EntityProperty(Office));
-                    thisOne.Properties = data1;
-                    thisOne.PartitionKey = "Partition1";
-                    thisOne.RowKey = Convert.ToString(rowCounter);
-                    var updater = TableOperation.InsertOrReplace(thisOne);
-                    myTable.Execute(updater);*/
+                    myTable.Execute(updater);
+                    rowCounter++;
                 }
             }
         }
