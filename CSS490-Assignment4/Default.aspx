@@ -12,9 +12,9 @@
         <div class="col-md-4">
             <h2>Getting started</h2>
             <p>
-                Bear in mind that you MUST click the Load Data button first!</p>
+                Bear in mind that you MUST click the Load Data button first! If a table already exists you may experience a wait while the application drops the pre-existing table and creates a new one. </p>
             <p>
-                &nbsp;</p>
+                Depending on your device layout may not be correct. The first text field is the first name, second is last name, third is the output box.</p>
             <p style="margin-left: 120px">
                 <asp:Label ID="Label2" runat="server" Text="First Name"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
