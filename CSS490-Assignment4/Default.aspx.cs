@@ -77,7 +77,6 @@ namespace CSS490_Assignment4
                 List<string> hello = new List<string>(Regex.Split(nowparse, Environment.NewLine));
                 hello.RemoveAll(String.IsNullOrWhiteSpace);
 
-
                 foreach (var entry in hello)
                 {
                     DynamicTableEntity thisOne = new DynamicTableEntity();
