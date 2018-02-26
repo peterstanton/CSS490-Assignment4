@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -44,6 +45,28 @@ namespace CSS490_Assignment4
                 CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
+            myTable.DeleteIfExists();
+            try
+            {
+                myTable.CreateIfNotExists();
+            }
+            catch(Exception)
+            {
+                outputBox.Text = "There was an error in processing, please hold for 30 seconds.";
+                myTable.DeleteIfExists();
+                System.Threading.Thread.Sleep(25000);
+                try
+                {
+                    myTable.CreateIfNotExists();
+                }
+                catch(Exception)
+                {
+                    outputBox.Text = "The Storage service is being slow, please try again in a few minutes...";
+                    myTable.DeleteIfExists();
+                    return;
+                }
+            }
+
             WebClient myclient = new WebClient();
             int rowCounter = 1;
 
@@ -65,14 +88,14 @@ namespace CSS490_Assignment4
                     String stuff = entry;
                     List<String> parsed = entry.Split(' ').ToList<String>();
                     parsed.RemoveAll(String.IsNullOrWhiteSpace);
-                    string firstName = parsed[1];
-                    string lastName = parsed[0];
+                    string firstName = parsed[1].ToLower();
+                    string lastName = parsed[0].ToLower();
                     data1.Add("firstname", new EntityProperty(firstName));
                     data1.Add("lastname", new EntityProperty(lastName));
                     foreach (var datum in parsed.Skip(2))
                     {                    
                         string[] thisVar = datum.Split('=');
-                        data1.Add(thisVar[0].ToLower(), new EntityProperty(thisVar[1]));
+                        data1.Add(thisVar[0].ToLower(), new EntityProperty(thisVar[1].ToLower()));
                     }
                     thisOne.Properties = data1;
                     thisOne.PartitionKey = "partition1";
@@ -91,9 +114,9 @@ namespace CSS490_Assignment4
             string last = null;
             outputBox.Text = "";
             if (!String.IsNullOrWhiteSpace(firstNameBox.Text))
-                first = firstNameBox.Text;
+                first = firstNameBox.Text.ToLower();
             if (!String.IsNullOrWhiteSpace(lastNameBox.Text))
-                last = lastNameBox.Text;
+                last = lastNameBox.Text.ToLower();
             if (first == null && last == null)
             {
                 outputBox.Text = "You need to enter a first and/or last name to find anything.";
@@ -104,6 +127,7 @@ namespace CSS490_Assignment4
     CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
+            myTable.CreateIfNotExists();
 
             TableQuery<DynamicTableEntity> getter = new TableQuery<DynamicTableEntity>();
             if(first != null && last == null)
