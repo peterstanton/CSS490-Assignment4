@@ -9,10 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 
 namespace CSS490_Assignment4
@@ -52,7 +49,7 @@ namespace CSS490_Assignment4
             }
             catch(Exception)
             {
-                outputBox.Text = "There was an error in processing, please hold for 30 seconds.";
+                outputBox.Text = "There was an error in processing, please hold for 25 seconds.";
                 myTable.DeleteIfExists();
                 System.Threading.Thread.Sleep(25000);
                 try
