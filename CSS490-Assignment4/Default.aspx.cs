@@ -132,7 +132,6 @@ namespace CSS490_Assignment4
             StringBuilder hello = new StringBuilder();
             foreach (DynamicTableEntity result in myTable.ExecuteQuery(getter))
             {                
-                Dictionary<int, String> columns = new Dictionary<int, string>();
                 for(int hi = 0; hi < result.Properties.Count; hi++)
                 {
                     hello.Append(result.Properties.ElementAt(hi).Key);
