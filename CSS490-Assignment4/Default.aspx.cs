@@ -43,26 +43,7 @@ namespace CSS490_Assignment4
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
             myTable.DeleteIfExists();
-            try
-            {
-                myTable.CreateIfNotExists();
-            }
-            catch(Exception)
-            {
-                outputBox.Text = "There was an error in processing, please hold for 25 seconds.";
-                myTable.DeleteIfExists();
-                System.Threading.Thread.Sleep(25000);
-                try
-                {
-                    myTable.CreateIfNotExists();
-                }
-                catch(Exception)
-                {
-                    outputBox.Text = "The Storage service is being slow, please try again in a few minutes...";
-                    myTable.DeleteIfExists();
-                    return;
-                }
-            }
+            recursivelyLoad(myTable);
 
             WebClient myclient = new WebClient();
             int rowCounter = 1;
@@ -123,7 +104,7 @@ namespace CSS490_Assignment4
     CloudConfigurationManager.GetSetting("petercss490table_AzureStorageConnectionString"));
             CloudTableClient littleBobbyTables = tableAccount.CreateCloudTableClient();
             CloudTable myTable = littleBobbyTables.GetTableReference("csspeteremployees");
-            myTable.CreateIfNotExists();
+            recursivelyLoad(myTable);
 
             TableQuery<DynamicTableEntity> getter = new TableQuery<DynamicTableEntity>();
             if(first != null && last == null)
@@ -171,6 +152,19 @@ namespace CSS490_Assignment4
                 outputBox.Text = "No results found.";
             else
                 outputBox.Text = hello.ToString();
+        }
+        protected void recursivelyLoad(CloudTable thisTable)
+        {
+            try
+            {
+                thisTable.CreateIfNotExists();
+            }
+            catch(Exception)
+            {
+                System.Threading.Thread.Sleep(5000);
+                recursivelyLoad(thisTable);
+            }
+            return;
         }
     }
 }
